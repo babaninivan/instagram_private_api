@@ -2,6 +2,7 @@ import warnings
 
 from .common import ClientDeprecationWarning
 from ..compatpatch import ClientCompatPatch
+from ..compat import compat_urllib_parse
 
 
 class FeedEndpointsMixin(object):
@@ -158,7 +159,7 @@ class FeedEndpointsMixin(object):
         :param tag:
         :return:
         """
-        endpoint = 'feed/tag/{tag!s}/'.format(**{'tag': tag})
+        endpoint = 'feed/tag/{tag!s}/'.format(**{'tag': compat_urllib_parse.quote(tag)})
         res = self._call_api(endpoint, query=kwargs)
         if self.auto_patch:
             if res.get('items'):
